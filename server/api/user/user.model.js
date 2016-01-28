@@ -52,14 +52,14 @@ UserSchema
   .path('email')
   .validate(function(email) {
     return email.length;
-  }, 'Email cannot be blank');
+  }, 'O email não pode ser vazio');
 
 // Validate empty password
 UserSchema
   .path('password')
   .validate(function(password) {
     return password.length;
-  }, 'Password cannot be blank');
+  }, 'A senha não pode ser vazia');
 
 // Validate email is not taken
 UserSchema
@@ -79,7 +79,7 @@ UserSchema
       .catch(function(err) {
         throw err;
       });
-  }, 'The specified email address is already in use.');
+  }, 'Este email já esta em uso');
 
 var validatePresenceOf = function(value) {
   return value && value.length;
@@ -96,7 +96,7 @@ UserSchema
     }
 
     if (!validatePresenceOf(this.password)) {
-      next(new Error('Invalid password'));
+      next(new Error('Senha inválida'));
     }
 
     // Make salt with a callback
