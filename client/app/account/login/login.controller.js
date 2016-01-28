@@ -1,10 +1,12 @@
 'use strict';
 
 class LoginController {
+  loading = false;
+
   constructor(Auth, $state) {
     this.user = {};
     this.errors = {};
-    this.submitted = false;
+    this.submitted = false;  
 
     this.Auth = Auth;
     this.$state = $state;
@@ -12,6 +14,7 @@ class LoginController {
 
   login(form) {
     this.submitted = true;
+    this.loading = true;
 
     if (form.$valid) {
       this.Auth.login({
@@ -24,8 +27,11 @@ class LoginController {
       })
       .catch(err => {
         this.errors.other = err.message;
+        this.loading = false;
       });
-    }
+    } else {
+      this.loading = false;
+    } // endif
   }
 }
 

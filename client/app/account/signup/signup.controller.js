@@ -15,9 +15,10 @@ class SignupController {
 
   register(form) {
     this.submitted = true;
+    this.loading = true;
 
     if (form.$valid) {
-      this.loading = true;
+      
       this.Auth.createUser({
         name: this.user.name,
         email: this.user.email,
@@ -36,7 +37,11 @@ class SignupController {
           form[field].$setValidity('mongoose', false);
           this.errors[field] = error.message;
         });
+
+        this.loading = false;
       });
+    } else {
+      this.loading = false;
     }
   }
 }
