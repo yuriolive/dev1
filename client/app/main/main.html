@@ -1,20 +1,75 @@
 <navbar></navbar>
 
-<header class="hero-unit" id="banner">
-  <div class="container">
-    <h1>'Allo, 'Allo!</h1>
-    <p class="lead">Kick-start your next web app with Angular Fullstack</p>
-    <img src="assets/images/yeoman.png" alt="I'm Yeoman">
-  </div>
+<header>
+  <video-bg class="header-video" video-id="main.video.id">
+    <div class="ui container">
+      <div class="ui grid">
+        <div class="eight wide column"></div>
+        <div class="eight wide column">
+          <div class="ui justified container">
+            <h1 class="ui inverted header">Maximize sua clínica</h1>
+            <h3 class="ui inverted header">Com o Smart Clinik sua agenda estará sempre cheia! Nossa plataforma automaticamente confirma as suas consultas e realoca seus pacientes para as vagas que ficarem em aberto.</h3>
+            <a ng-href="/signup"><button class="ui big orange button">Cadastre-se</button></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </video-bg>
 </header>
 
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h1 class="page-header">Features:</h1>
-      <ul class="nav nav-tabs nav-stacked col-md-4 col-lg-4 col-sm-6" ng-repeat="thing in main.awesomeThings">
-        <li><a href="#" tooltip="{{thing.info}}">{{thing.name}}</a></li>
-      </ul>
+<div class="ui center aligned fluid container padded">
+  <div class="ui container">
+    <h1 class="ui teal header conteudo">Como Funciona</h1>
+    <div class="ui three column stackable grid">
+      <div class="column">
+        <div class="ui center aligned container">
+          <i class="circular inverted teal huge calendar icon"></i>
+          <h3 class="ui teal header">Agendamento</h3>
+          <p>Agende facilmente seus pacientes usando nossa plataforma</p>
+        </div>
+      </div>
+      <div class="column">
+          <i class="circular inverted teal huge comments icon"></i>
+          <h3 class="ui teal header">Confirmação</h3>
+          <p>Seus pacientes receberão automaticamente um SMS (ou uma ligação) onde poderão cancelar ou confirmar a consulta</p>
+      </div>
+      <div class="column">
+          <i class="circular inverted teal huge retweet icon"></i>
+          <h3 class="ui teal header">Realocação</h3>
+          <p>Caso seu horário fique em aberto, nossa plataforma automaticamente liga para seus pacientes perguntando se desejam adiantar a consulta, preenchendo sua agenda</p>
+      </div>
+    </div> 
+  </div>
+</div>
+
+<div class="ui center aligned fluid container padded teal">
+  <div class="ui center aligned grid container">
+    <div class="column">
+      <h1 class="ui inverted header">Cadastre-se</h1>
+      <div class="ui form">
+        <div class="ui four column stackable grid">
+          <div class="column">
+            <div class="ui center aligned container">
+              <input type="text" placeholder="Nome">
+            </div>
+          </div>
+          <div class="column">
+            <div class="ui center aligned container">
+              <input type="email" placeholder="Email">
+            </div> 
+          </div>
+          <div class="column">
+            <div class="ui center aligned container">
+              <input type="password" placeholder="Senha">
+            </div> 
+          </div>
+          <div class="column">
+            <div class="ui left aligned container">
+              <span class="ui fluid submit button">Enviar</span>
+            </div>
+          </div>
+        </div> 
+      </div>
     </div>
   </div>
 </div>

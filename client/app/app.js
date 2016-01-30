@@ -8,7 +8,8 @@ angular.module('dev1App', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'validation.match'
+  'validation.match',
+  'angularVideoBg'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

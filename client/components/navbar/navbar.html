@@ -1,4 +1,4 @@
-<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarController">
+<!--<div class="navbar navbar-default navbar-static-top" ng-controller="NavbarController">
   <div class="container">
     <div class="navbar-header">
       <button class="navbar-toggle" type="button" ng-click="nav.isCollapsed = !nav.isCollapsed">
@@ -26,4 +26,40 @@
       </ul>
     </div>
   </div>
+</div>-->
+
+<div class="ui inverted fixed menu" ng-controller="NavbarController">
+  <div class="ui container">
+    <div class="header item" ng-show="nav.isLoggedIn()">
+      {{ nav.getCurrentUser().name }}
+    </div>
+    <a class="header item" ng-hide="nav.isLoggedIn()" ui-sref="main">
+      Smart Clinik
+    </a>
+    <a class="item" ng-show="nav.isLoggedIn()" ui-sref="painel">
+      <i class="dashboard icon"></i> Painel
+    </a>
+    <a class="item" ng-show="nav.isLoggedIn()" ui-sref="agenda">
+      <i class="calendar outline icon"></i> Agenda
+    </a>
+    <a class="item" ng-show="nav.isLoggedIn()" ui-sref="paciente">
+      <i class="users icon"></i> Pacientes
+    </a>
+    <a class="item" ng-show="nav.isLoggedIn()" ui-sref="config">
+      <i class="setting icon"></i>
+    </a>
+    <div class="right menu">
+      <a class="item" ng-show="nav.isLoggedIn()" ui-sref="logout">
+        <i class="sign out icon"></i> Sair
+      </a>
+      <a class="item" ng-hide="nav.isLoggedIn()" ui-sref="login">
+        <i class="sign in icon"></i> Login
+      </a>
+      <div class="item" ng-hide="nav.isLoggedIn()">
+        <button class="ui inverted orange button" ui-sref="signup">Cadastre-se</button>
+      </div>
+    </div>
+
+  </div>
 </div>
+<div class="navbar padding"></div>

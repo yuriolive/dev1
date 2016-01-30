@@ -1,0 +1,72 @@
+<navbar></navbar>
+
+<div class="ui container paciente">
+  <div class="ui grid">
+    <div class="four wide column">
+        <div class="ui segments">
+          <div class="ui segment">
+            <h5 class="ui header">Próximos Pacientes</h5>
+            <div class="ui teal segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Yuri
+                  <small><div>12:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="checkmark teal icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="ui yellow segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Bianca
+                  <small><div>14:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="warning yellow icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <h5 class="ui header">To-do's</h5>
+          </div>
+        </div>
+    </div>
+    <div class="twelve wide column">
+      <div class="ui segment">
+        <h3 class="ui dividing header">Cadastrar Paciente</h3>
+        <form class="ui form">
+          <div class="field">
+            <label>Paciente *</label>
+            <input type="text" placeholder="Nome" required>
+          </div>
+          <div class="field">
+            <label>Data Nascimento *</label>
+            <input type="date" placeholder="Data Nascimento" required>
+          </div>
+          <div class="field">
+            <label>E-mail *</label>
+            <input type="email" placeholder="Email" required>
+          </div>          
+          <div class="field">
+            <label>Telefone Celular *</label>
+            <input type="text" placeholder="(99) 9999-9999" ng-model="phoneNumberCelular" ui-br-phone-number required>
+          </div>         
+          <div class="field">
+            <label>Telefone Residencal</label>
+            <input type="text" placeholder="(99) 9999-999" ng-model="phoneNumberResidencial" ui-br-phone-number>
+          </div>
+          <div class="field">
+            <label>Observações</label>
+            <input type="text">
+          </div>
+          <button class="ui red button" type="submit">Excluir</button>
+          <button class="ui teal button" type="submit">Salvar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

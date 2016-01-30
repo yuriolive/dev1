@@ -3,6 +3,9 @@
 (function() {
 
 class MainController {
+  video = {
+    id: 'HmZGARQIsk4'
+  };
 
   constructor($http) {
     this.$http = $http;

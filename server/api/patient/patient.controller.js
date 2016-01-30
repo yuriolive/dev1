@@ -11,6 +11,9 @@
 
 import _ from 'lodash';
 import Patient from './patient.model';
+import passport from 'passport';
+import config from '../../config/environment';
+import jwt from 'jsonwebtoken';
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -76,7 +79,10 @@ export function show(req, res) {
 
 // Creates a new Patient in the DB
 export function create(req, res) {
-  Patient.createAsync(req.body)
+  var newPatient = new Patient(_.merge({ author: req.user._id }, req.body));
+  console.log(req.body);
+  console.log(newPatient);
+  Patient.createAsync(newPatient)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }
