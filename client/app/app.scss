@@ -12,6 +12,19 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
   padding: 0.2em 0;
 }
 
+body {
+	background-image: url('../assets/images/bg.png');
+}
+
+.ui.container.padded {
+  padding-top: 2em;
+  padding-bottom: 2em;
+
+  &.teal {// TODO Use Semantic UI values
+    background-color: #00B5AD;
+  }
+}
+
 /* Responsive: Portrait tablets and up */
 @media screen and (min-width: 768px) {
   .container {
@@ -22,8 +35,10 @@ $fa-font-path: "../bower_components/font-awesome/fonts";
 // Component styles are injected through grunt
 // injector
 @import 'admin/admin.scss';
+@import 'dashboard/agenda/agenda.scss';
+@import 'dashboard/pacientes/editarPaciente/editarPaciente.scss';
+@import 'dashboard/pacientes/pacientes.scss';
 @import 'main/main.scss';
-@import 'pacientes/pacientes.scss';
 @import '../components/footer/footer.scss';
 @import '../components/navbar/navbar.scss';
 // endinjector

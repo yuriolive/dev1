@@ -76,7 +76,8 @@ export function show(req, res) {
 
 // Creates a new Event in the DB
 export function create(req, res) {
-  Event.createAsync(req.body)
+  var newEvent = new Event(_.merge({ author: req.user._id }, req.body));
+  Event.createAsync(newEvent)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));
 }

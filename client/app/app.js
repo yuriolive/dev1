@@ -9,7 +9,8 @@ angular.module('dev1App', [
   'ngSanitize',
   'ui.router',
   'validation.match',
-  'angularVideoBg'
+  'angularVideoBg',
+  'ui.calendar'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
     $urlRouterProvider

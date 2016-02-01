@@ -1,0 +1,84 @@
+<navbar></navbar>
+
+<div class="ui container">
+  <div class="ui grid">
+    <div class="four wide column">
+        <div class="ui segments">
+          <div class="ui segment">
+            <h5 class="ui header">Próximos Pacientes</h5>
+            <div class="ui teal segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Yuri
+                  <small><div>12:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="checkmark teal icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="ui yellow segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Bianca
+                  <small><div>14:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="warning yellow icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <h5 class="ui header">To-do's</h5>
+          </div>
+        </div>
+    </div>
+
+
+
+    <div class="twelve wide column">
+      <div class="ui segment">
+        <h3 class="ui dividing header">Pacientes</h3>
+        <div class="ui container right aligned">
+          <button class="ui left floated floating dropdown tiny icon button checkbox-paciente">
+            <i class="checkmark box icon"></i><i class="dropdown icon"></i>
+            <div class="menu">
+              <div class="item"><i class="delete icon"></i> Remover Paciente(s)</div>
+            </div>
+          </button>
+          <button class="positive tiny ui button labeled icon" ui-sref="editarPaciente">
+            <i class="plus icon"></i>
+            Adicionar
+          </button>
+        </div>
+        <table class="ui padded table center aligned">
+          <thead>
+            <tr>
+              <th></th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Telefone Celular</th>
+              <th>Telefone Residencial</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="patient in vm.patients">
+              <td>        
+                <div class="ui checkbox">
+                  <input type="checkbox">
+                  <label></label>
+                </div>
+              </td>
+              <td>{{patient.name}}</td>
+              <td>{{patient.email}}</td>
+              <td>{{patient.phones.mobile}}</td>
+              <td>{{patient.phones.home || "-"}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <p><small>{{vm.patients.length}} resultados</small></p>
+      </div>
+    </div>
+  </div>
+</div>

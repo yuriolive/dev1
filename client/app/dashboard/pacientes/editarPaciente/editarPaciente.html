@@ -1,6 +1,6 @@
 <navbar></navbar>
 
-<div class="ui container paciente">
+<div class="ui container">
   <div class="ui grid">
     <div class="four wide column">
         <div class="ui segments">
@@ -37,32 +37,38 @@
     <div class="twelve wide column">
       <div class="ui segment">
         <h3 class="ui dividing header">Cadastrar Paciente</h3>
-        <form class="ui form">
+        <div class="ui container right aligned">
+          <button class="tiny ui button labeled icon" ui-sref="pacientes">
+            <i class="left chevron icon"></i>
+            Voltar
+          </button>
+        </div>
+        <form class="ui form" name="form" ng-submit="vm.addPaciente(form)" ng-class="{true: 'loading'}[vm.loading]" novalidate>
           <div class="field">
             <label>Paciente *</label>
-            <input type="text" placeholder="Nome" required>
+            <input type="text" placeholder="Nome" name="name" class="form-control" ng-model="vm.patient.name" required mongoose-error>
           </div>
           <div class="field">
-            <label>Data Nascimento *</label>
-            <input type="date" placeholder="Data Nascimento" required>
+            <label>Data Nascimento</label>
+            <input type="date" placeholder="Data Nascimento" name="birthday" class="form-control" ng-model="vm.patient.birthday" mongoose-error>
           </div>
           <div class="field">
             <label>E-mail *</label>
-            <input type="email" placeholder="Email" required>
+            <input type="email" placeholder="Email" name="email" class="form-control" ng-model="vm.patient.email" required mongoose-error>
           </div>          
           <div class="field">
             <label>Telefone Celular *</label>
-            <input type="text" placeholder="(99) 9999-9999" ng-model="phoneNumberCelular" ui-br-phone-number required>
+            <input type="text" placeholder="(99) 9999-9999" name="mobilePhone" class="form-control" ng-model="vm.patient.phones.mobile" ui-br-phone-number mongoose-error required>
           </div>         
           <div class="field">
             <label>Telefone Residencal</label>
-            <input type="text" placeholder="(99) 9999-999" ng-model="phoneNumberResidencial" ui-br-phone-number>
+            <input type="text" placeholder="(99) 9999-999" name="homePhone" class="form-control" ng-model="vm.patient.phones.home" ui-br-phone-number mongoose-error>
           </div>
           <div class="field">
             <label>Observações</label>
-            <input type="text">
+            <input type="text" placeholder="..." name="note" class="form-control" ng-model="vm.patient.note">
           </div>
-          <button class="ui red button" type="submit">Excluir</button>
+          <!--<button class="ui red button" type="submit">Excluir</button>-->
           <button class="ui teal button" type="submit">Salvar</button>
         </form>
       </div>

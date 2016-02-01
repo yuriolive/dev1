@@ -33,12 +33,3 @@
     padding-top: 6em;
   }
 }
-
-.ui.container.padded {
-  padding-top: 2em;
-  padding-bottom: 2em;
-
-  &.teal {// TODO Use Semantic UI values
-    background-color: #00B5AD;
-  }
-}

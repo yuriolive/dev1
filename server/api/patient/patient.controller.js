@@ -67,6 +67,11 @@ export function index(req, res) {
   Patient.findAsync()
     .then(respondWithResult(res))
     .catch(handleError(res));
+  /*
+  Patient.findAsync({ author: req.user._id })
+    .then(respondWithResult(res))
+    .catch(handleError(res));
+  */
 }
 
 // Gets a single Patient from the DB
@@ -80,8 +85,6 @@ export function show(req, res) {
 // Creates a new Patient in the DB
 export function create(req, res) {
   var newPatient = new Patient(_.merge({ author: req.user._id }, req.body));
-  console.log(req.body);
-  console.log(newPatient);
   Patient.createAsync(newPatient)
     .then(respondWithResult(res, 201))
     .catch(handleError(res));

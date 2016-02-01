@@ -13,15 +13,14 @@ var dateStampSchema = {
 /**
  * Validations
  */
-var dateValidator = [
+/*var dateValidator = [
   validate({
     validator: function(date) {
-      return date.ends > date.starts;
+      return date.endDate > date.startDate;
     },
     message: 'A data de término do evento deve ser maior que a data de início'
   })
-];
-
+];*/
 
 /**
  * Schema
@@ -37,12 +36,28 @@ var EventSchema = new mongoose.Schema({
     ref:  'Patient',
     required: true
   },
-  date: {
-    type: dateStampSchema, 
-    validate: dateValidator,
+  title: {
+    type: String,
     required: true
   },
+  start: {
+    type: Date,
+    required: true
+  },
+  end: {
+    type: Date,
+    required: true    
+  },
   note: String
+});
+
+EventSchema.pre('validate', function(next) {
+    if (this.start > this.end) {
+        this.invalidate('start', 'A data de término do evento deve ser maior que a data de início');
+        next();
+    } else {
+        next();
+    }
 });
 
 export default mongoose.model('Event', EventSchema);

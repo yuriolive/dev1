@@ -1,0 +1,109 @@
+<navbar></navbar>
+
+<div class="ui container" id="context">
+  <!-- Error Message -->
+  <div class="ui error message transition" ng-show="vm.errors.length > 0">
+    <i class="close icon"></i>
+    <div class="header">
+      Ocorreu um erro ao processar sua ação
+    </div>
+    <ul class="list">
+      <li>You can now have cover images on blog pages</li>
+      <li>Drafts will now auto-save while writing</li>
+    </ul>
+    <p>{{vm.errors}}</p>
+  </div>
+
+  <!-- Content -->
+  <div class="ui grid">
+    <div class="four wide column">
+        <div class="ui segments">
+          <div class="ui segment">
+            <h5 class="ui header">Próximos Pacientes</h5>
+            <div class="ui teal segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Yuri
+                  <small><div>12:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="checkmark teal icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="ui yellow segment">
+              <div class="ui grid">
+                <div class="twelve wide column">
+                  Bianca
+                  <small><div>14:30</div></small>
+                </div>
+                <div class="four wide column">
+                  <i class="warning yellow icon"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="ui segment">
+            <h5 class="ui header">To-do's</h5>
+          </div>
+        </div>
+    </div>
+    <div class="twelve wide column">
+      <div class="ui segment">
+        <h3 class="ui dividing header">Agenda</h3>
+        <div class="ui inverted dimmer" ng-class="{true: 'active'}[vm.loading]">
+          <div class="ui text loader"></div>
+        </div>
+        <div ui-calendar="vm.uiConfig.calendar" ng-model="vm.eventSources" class="calendar" calendar="myCalendar">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="ui small modal">
+  <i class="close icon"></i>
+  <div class="header">
+    Consulta
+  </div>
+
+  <div class="content">
+    <form class="ui form" name="form" ng-submit="vm.addEvent(form)" novalidate>
+      <div class="field">
+        <label>Paciente <a href="#"><i class="add circle green icon"></i></a></label>
+        <div class="ui fluid search selection dropdown agenda">
+          <input type="hidden" id="patientIndex" name="patientIndex">
+          <i class="dropdown icon"></i>
+          <div class="default text">Selecione o paciente</div>
+          <div class="menu">
+            <div class="item" data-value="{{key}}" ng-repeat="(key, patient) in vm.patients">{{patient.name}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Data</label>
+        <input type="date" placeholder="Data" ng-model="vm.newEvent.startDate" required>
+      </div>
+      <div class="inline fields">
+        <div class="field">
+          <label>Horário</label>
+          <input type="time" placeholder="Hora inicio" ng-model="vm.newEvent.startDate" required>
+        </div>
+        <div class="field">
+          <label>Até</label>
+          <input type="time" placeholder="Hora fim" ng-model="vm.newEvent.endDate" required>
+        </div>
+      </div>
+      <div class="field">
+        <label>Observações</label>
+		<textarea rows="2" ng-model="vm.newEvent.note"></textarea>
+      </div>
+    </form>
+  </div>
+
+  <div class="actions">
+    <button class="ui red button" type="submit">Excluir</button>
+    <button class="ui teal button" type="submit" ng-click="vm.addEvent(form)">Salvar</button>
+  </div>
+</div>

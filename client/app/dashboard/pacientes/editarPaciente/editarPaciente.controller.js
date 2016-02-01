@@ -1,34 +1,39 @@
 'use strict';
 
-class SignupController {
+class EditarPacienteCtrl {
   //start-non-standard
-  user = {};
+  patient = {};
   errors = {};
   submitted = false;
   loading = false;
   //end-non-standard
 
-  constructor(Auth, $state) {
-    this.Auth = Auth;
+  constructor($http, $state) {
+    this.$http = $http;
     this.$state = $state;
   }
 
-  register(form) {
-    this.submitted = true;
+  addPaciente(form) {
+  	this.submitted = true;
     this.loading = true;
 
     if (form.$valid) {
-      
-      this.Auth.createUser({
-        name: this.user.name,
-        email: this.user.email,
-        password: this.user.password
+      this.$http.post('/api/patients', { 
+      	name: this.patient.name,
+      	birthday: this.patient.birthday,
+      	email: this.patient.email,
+      	phones: {
+      		mobile: this.patient.phones.mobile,
+      		home: this.patient.phones.home
+      	},
+      	note: this.patient.note
       })
       .then(() => {
-        // Account created, redirect to home
-        this.$state.go('agenda');
+        // Logged in, redirect to home
+        this.$state.go('pacientes');
       })
       .catch(err => {
+        this.loading = false;
         err = err.data;
         this.errors = {};
 
@@ -45,4 +50,4 @@ class SignupController {
 }
 
 angular.module('dev1App')
-  .controller('SignupController', SignupController);
+  .controller('EditarPacienteCtrl', EditarPacienteCtrl);
