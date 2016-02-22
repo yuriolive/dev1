@@ -13,4 +13,7 @@ router.put('/:id', auth.isAuthenticated(), controller.update);
 router.patch('/:id', auth.isAuthenticated(), controller.update);
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 
+// Set the status of the event (confirmed)
+router.get('/setstatus/:id', controller.setStatus);
+
 module.exports = router;

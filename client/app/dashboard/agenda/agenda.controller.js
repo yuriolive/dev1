@@ -30,7 +30,7 @@ class AgendaCtrl {
         lang: 'pt-br',
         defaultView: 'agendaWeek',
         header:{
-          left: 'month agendaWeek agendaDay',
+          left: 'agendaWeek agendaDay',
           center: 'title',
           right: 'today prev,next'
         },
@@ -39,7 +39,6 @@ class AgendaCtrl {
         eventDrop: this.eventUpdate
       }
     };
-    angular.element('.ui.dropdown.agenda').dropdown();
 
     // Get all the patients
     this.getPatients();
@@ -54,6 +53,7 @@ class AgendaCtrl {
     .then(response => {
       this.patients = response.data;
       this.loading = false;
+      angular.element('.ui.dropdown.agenda').dropdown();
     })
     .catch(err => {
       err = err.data;
@@ -70,12 +70,17 @@ class AgendaCtrl {
 
 
     if(form.$valid && (document.getElementById("patientIndex").value != '') && (this.newEvent.startDate < this.newEvent.endDate)) {
+      var i = document.getElementById("patientIndex").value;
       var eventSubmit = { 
         start: this.newEvent.startDate,
         end: this.newEvent.endDate,
-        title: this.patients[document.getElementById("patientIndex").value].name,
-        patient: this.patients[document.getElementById("patientIndex").value]._id,
-        note: this.newEvent.note
+        title: this.patients[i].name,
+        patient: this.patients[i]._id,
+        note: this.newEvent.note,
+        phones: {
+          mobile: this.patients[i].phones.mobile,
+          home: this.patients[i].phones.home
+        }
       };
 
       angular.element('.ui.modal').modal('hide');

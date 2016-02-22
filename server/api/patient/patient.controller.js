@@ -64,14 +64,9 @@ function handleError(res, statusCode) {
 
 // Gets a list of Patients
 export function index(req, res) {
-  Patient.findAsync()
-    .then(respondWithResult(res))
-    .catch(handleError(res));
-  /*
   Patient.findAsync({ author: req.user._id })
     .then(respondWithResult(res))
     .catch(handleError(res));
-  */
 }
 
 // Gets a single Patient from the DB

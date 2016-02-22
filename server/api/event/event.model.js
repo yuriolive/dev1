@@ -3,12 +3,6 @@
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var validate = require('mongoose-validator');
 
-// Object defining the dates
-var dateStampSchema = {
-  startDate: {type:Date},
-  endDate: {type:Date}
-};
-
 
 /**
  * Validations
@@ -36,6 +30,15 @@ var EventSchema = new mongoose.Schema({
     ref:  'Patient',
     required: true
   },
+  phones: {
+    mobile: {
+      type: String,
+      required: true,
+    },
+    home: {
+      type: String
+    }
+  },
   title: {
     type: String,
     required: true
@@ -47,6 +50,10 @@ var EventSchema = new mongoose.Schema({
   end: {
     type: Date,
     required: true    
+  },
+  status: { // false -> not confirmed / true -> confirmed
+    type: Boolean,
+    default: false
   },
   note: String
 });
