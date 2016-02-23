@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "main": "server/app.js",
   "dependencies": {
-    "agenda": "^0.7.7",
+    "agenda": "^0.7.9",
     "babel-runtime": "^5.8.20",
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.3",
@@ -24,6 +24,7 @@
     "mongoose": "^4.1.2",
     "mongoose-validator": "^1.2.4",
     "morgan": "~1.6.1",
+    "nodemailer": "^2.2.1",
     "passport": "~0.3.0",
     "passport-local": "^1.0.0",
     "serve-favicon": "^2.3.0",

@@ -10,11 +10,27 @@
 'use strict';
 
 import _ from 'lodash';
+import fs from 'fs';
+import Agenda from 'agenda';
+import nodemailer from 'nodemailer';
 import Event from './event.model';
+import config from '../../config/environment';
 
 // Require the Twilio module and create a REST client
 var tw = require('twilio')('AC5a6e91bf7af13473e93bc1ba249c9b65', '9449a92fd3885724a50ed0e27b949e4d');
+
 var moment = require('moment');
+
+// Create the object to schedule jobs
+var agenda = new Agenda({db: {address: config.mongo.uri}});
+
+// Create the object to send emails with nodemailer
+var transporter = nodemailer.createTransport(config.smtp);
+
+// Load email event confirmation template
+var templatePath = 'server/views/email/eventConfirmation.html';
+var templateContent = fs.readFileSync(templatePath);
+var eventHTML = _.template(templateContent);
 
 function respondWithResult(res, statusCode) {
   statusCode = statusCode || 200;
@@ -68,6 +84,7 @@ export function index(req, res) {
   Event.findAsync({ author: req.user._id })
     .then(respondWithResult(res))
     .catch(handleError(res));
+
 /*
   Event.findAsync({ author: req.user._id, start: {"$gte": req.body.start, "$lt": req.body.end} })
     .then(respondWithResult(res))
@@ -85,29 +102,28 @@ export function show(req, res) {
 // Creates a new Event in the DB
 export function create(req, res) {
   var newEvent = new Event(_.merge({ author: req.user._id }, req.body));
-  console.log('http://smartclinik.com/tw.php?paciente=' + encodeURIComponent(newEvent.title)
-        + '&medico=' + encodeURIComponent(req.user.name)
-        + '&dia=' + moment(newEvent.start).format('D')
-        + '&hora=' + moment(newEvent.start).format('hh:mm'));
-  //Place a phone call, and respond with TwiML instructions from the given URL
-  tw.makeCall({
-      to:'+55' + newEvent.phones.mobile, // Any number Twilio can call
-      from: '+552140420373', // A number you bought from Twilio and can use for outbound communication
-      // A URL that produces an XML document (TwiML) which contains instructions for the call
-      url: 'http://smartclinik.com/tw.php?paciente=' + encodeURIComponent(newEvent.title)
-        + '&medico=' + encodeURIComponent(req.user.name)
-        + '&dia=' + moment(newEvent.start).format('D')
-        + '&hora=' + moment(newEvent.start).format('hh:mm')
-        + '&id=' + newEvent._id
-  }, function(err, responseData) {
-      /// This callback is executed when the request completes
-      console.log(responseData.from); // outputs "+14506667788"
-      if(err) { // Something has gone wrong
-        console.log(err);
-      } else {
-
-      }
-  });
+  
+  // Schedule job to confirm the event
+  /*agenda.schedule(moment(newEvent.start).subtract(1, 'day').toDate(), 'schedule_confirmation', 
+    {
+      id: newEvent._id,
+      nameDoctor: req.user.name,
+      namePatient: newEvent.title,
+      mobile: newEvent.phones.mobile,
+      email: newEvent.email,
+      start: newEvent.start
+    }
+  );*/
+  agenda.schedule('in 2 seconds', 'schedule_confirmation', 
+    {
+      id: newEvent._id,
+      nameDoctor: req.user.name,
+      namePatient: newEvent.title,
+      mobile: newEvent.phones.mobile,
+      email: newEvent.email,
+      start: newEvent.start
+    }
+  );
 
   Event.createAsync(newEvent)
     .then(respondWithResult(res, 201))
@@ -142,3 +158,60 @@ export function setStatus(req, res) {
     .then(respondWithResult(res))
     .catch(handleError(res));
 }
+
+
+/**
+ * Starting to process jobs
+ */
+agenda.on('ready', function() {
+  agenda.start();
+  console.log("Worker started!");
+});
+
+/**
+ * Defining Jobs
+ */
+agenda.define('schedule_confirmation', function(job, done) {
+  var data = job.attrs.data;
+  data = _.merge({
+    confirmURL: 'http://www.smartclinik.com/api/setstatus/' + data.id,
+    cancelURL: 'http://www.smartclinik.com/api/delete/' + data.id
+  }, data);
+  var mailOptions = {
+    from: '"Smart Clinik" <contato@smartclinik.com>',
+    to: data.email,
+    subject: 'Confirmação da consulta com ' + data.nameDoctor,
+    html: eventHTML(data)
+  };
+
+  // Send email
+  transporter.sendMail(mailOptions, function(error, info){
+    if(error){
+        return console.log(error);
+    }
+    console.log('Message sent: ' + info.response);
+    done();
+  });
+/*
+  // Place a phone call, and respond with TwiML instructions from the given URL
+  tw.makeCall({
+      to:'+55' + data.mobile, // Any number Twilio can call
+      from: '+552140420373', // A number you bought from Twilio and can use for outbound communication
+      // A URL that produces an XML document (TwiML) which contains instructions for the call
+      url: 'http://smartclinik.com/tw.php?paciente=' + encodeURIComponent(data.namePatient)
+        + '&medico=' + encodeURIComponent(data.nameDoctor)
+        + '&dia=' + moment(data.start).format('D')
+        + '&hora=' + moment(data.start).format('hh:mm')
+        + '&id=' + data.id
+  }, function(err, responseData) {
+      /// This callback is executed when the request completes
+      //console.log(responseData.from); // outputs "+14506667788"
+      if(err) { // Something has gone wrong
+        console.log(err);
+      } else {
+
+      }
+  });*/
+
+
+});

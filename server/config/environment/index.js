@@ -39,6 +39,17 @@ var all = {
         safe: true
       }
     }
+  },
+
+  // SMTP connection to ZOHO
+  smtp: {
+    host: 'smtp.zoho.com',
+    port: 465,
+    secure: true, // use SSL
+    auth: {
+      user: 'contato@smartclinik.com',
+      pass: 'kitomeudog'
+    }
   }
 };
 

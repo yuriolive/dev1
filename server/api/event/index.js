@@ -15,5 +15,6 @@ router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 
 // Set the status of the event (confirmed)
 router.get('/setstatus/:id', controller.setStatus);
+router.get('/delete/:id', controller.destroy);
 
 module.exports = router;

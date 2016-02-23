@@ -5,7 +5,7 @@ echo '<?xml version="1.0" encoding="UTF-8" ?>
 <Response>
     <Gather numDigits="1" action="/tw-resp.php?id=' . $_GET['id'] . '" method="GET">
       <Say voice="alice" language="pt-BR" loop="3">Bom dia ' . $_GET['paciente'] . 
-        '. Gostaria de confirmar sua consulta com o doutor ' . $_GET['medico'] . 
+        '. Gostaria de confirmar sua consulta com ' . $_GET['medico'] . 
         ', para o dia ' . $_GET['dia'] . 
         ', as ' . $_GET['hora'] . 
         '. Tecle 1 para confirmar ou 3 para cancelar.

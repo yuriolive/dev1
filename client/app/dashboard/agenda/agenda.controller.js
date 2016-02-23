@@ -80,7 +80,8 @@ class AgendaCtrl {
         phones: {
           mobile: this.patients[i].phones.mobile,
           home: this.patients[i].phones.home
-        }
+        },
+        email: this.patients[i].email
       };
 
       angular.element('.ui.modal').modal('hide');

@@ -39,6 +39,10 @@ var EventSchema = new mongoose.Schema({
       type: String
     }
   },
+  email: {
+    type: String,
+    lowercase: true
+  },
   title: {
     type: String,
     required: true
