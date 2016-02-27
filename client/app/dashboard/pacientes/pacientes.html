@@ -44,7 +44,7 @@
           <button class="ui left floated floating dropdown tiny icon button checkbox-paciente">
             <i class="checkmark box icon"></i><i class="dropdown icon"></i>
             <div class="menu">
-              <div class="item"><i class="delete icon"></i> Remover Paciente(s)</div>
+              <div class="item" ng-click="vm.deletePatients()"><i class="delete icon"></i> Remover Paciente(s)</div>
             </div>
           </button>
           <button class="positive tiny ui button labeled icon" ui-sref="editarPaciente">
@@ -66,7 +66,7 @@
             <tr ng-repeat="patient in vm.patients">
               <td>        
                 <div class="ui checkbox">
-                  <input type="checkbox">
+                  <input type="checkbox" ng-init="patient.selected=false" ng-model="patient.selected">
                   <label></label>
                 </div>
               </td>

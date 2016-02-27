@@ -26,12 +26,29 @@ class PacientesCtrl {
       // Do something...
     });
   }
-  /*deletePaciente(thing) {
-    this.$http.delete('/api/things/' + thing._id);
+
+
+  // Function to delete selected patients
+  deletePatients() {
+    this.$http.post(
+      '/api/patients/delete/bulk', 
+      this.patients.filter(function(p) {
+        return p.selected;
+      }))
+    .then(response => {
+      this.loading = false;
+      // TODO Seria interessante fazer so 1 filter
+      this.patients = this.patients.filter(function(p) {
+        return p.selected == false;
+      });
+    })
+    .catch(err => {
+      err = err.data;
+      this.errors = {};
+
+      // Do something...
+    });
   }
-  pacientesCadastr
-  
-  */
 }
 
 angular.module('dev1App')

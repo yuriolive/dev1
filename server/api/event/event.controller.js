@@ -13,6 +13,7 @@ import _ from 'lodash';
 import fs from 'fs';
 import Agenda from 'agenda';
 import nodemailer from 'nodemailer';
+import crypto from 'crypto';
 import Event from './event.model';
 import config from '../../config/environment';
 
@@ -102,21 +103,11 @@ export function show(req, res) {
 // Creates a new Event in the DB
 export function create(req, res) {
   var newEvent = new Event(_.merge({ author: req.user._id }, req.body));
-  
+
   // Schedule job to confirm the event
-  /*agenda.schedule(moment(newEvent.start).subtract(1, 'day').toDate(), 'schedule_confirmation', 
+  agenda.schedule(moment(newEvent.start).subtract(1, 'day').toDate(), 'schedule_confirmation', 
     {
-      id: newEvent._id,
-      nameDoctor: req.user.name,
-      namePatient: newEvent.title,
-      mobile: newEvent.phones.mobile,
-      email: newEvent.email,
-      start: newEvent.start
-    }
-  );*/
-  agenda.schedule('in 2 seconds', 'schedule_confirmation', 
-    {
-      id: newEvent._id,
+      crypto_id: encrypt(newEvent.id),
       nameDoctor: req.user.name,
       namePatient: newEvent.title,
       mobile: newEvent.phones.mobile,
@@ -150,9 +141,17 @@ export function destroy(req, res) {
     .catch(handleError(res));
 }
 
+// Deletes a Event from the DB
+export function destroyPublic(req, res) {
+  Event.findByIdAsync(decrypt(req.params.crypto_id))
+    .then(handleEntityNotFound(res))
+    .then(removeEntity(res))
+    .catch(handleError(res));
+}
+
 // Set the status of a event (confirmed)
 export function setStatus(req, res) {
-  Event.findByIdAsync(req.params.id)
+  Event.findByIdAsync(decrypt(req.params.crypto_id))
     .then(handleEntityNotFound(res))
     .then(saveUpdates({status: true}))
     .then(respondWithResult(res))
@@ -174,8 +173,8 @@ agenda.on('ready', function() {
 agenda.define('schedule_confirmation', function(job, done) {
   var data = job.attrs.data;
   data = _.merge({
-    confirmURL: 'http://www.smartclinik.com/api/setstatus/' + data.id,
-    cancelURL: 'http://www.smartclinik.com/api/delete/' + data.id
+    confirmURL: 'http://smartclinik.com/patient/confirm/' + data.crypto_id,
+    cancelURL: 'http://smartclinik.com/patient/cancel/' + data.crypto_id
   }, data);
   var mailOptions = {
     from: '"Smart Clinik" <contato@smartclinik.com>',
@@ -204,6 +203,7 @@ agenda.define('schedule_confirmation', function(job, done) {
         + '&hora=' + moment(data.start).format('hh:mm')
         + '&id=' + data.id
   }, function(err, responseData) {
+    
       /// This callback is executed when the request completes
       //console.log(responseData.from); // outputs "+14506667788"
       if(err) { // Something has gone wrong
@@ -215,3 +215,21 @@ agenda.define('schedule_confirmation', function(job, done) {
 
 
 });
+
+
+/**
+ * Functions to encrypt and decrypt the id's
+ */
+function encrypt(text){
+  var cipher = crypto.createCipher('aes192', config.secrets.link);
+  var crypted = cipher.update(text,'utf8','hex');
+  crypted += cipher.final('hex');
+  return crypted;
+}
+ 
+function decrypt(text){
+  var decipher = crypto.createDecipher('aes192', config.secrets.link);
+  var dec = decipher.update(text,'hex','utf8');
+  dec += decipher.final('utf8');
+  return dec;
+}

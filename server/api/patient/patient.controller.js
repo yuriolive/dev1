@@ -104,3 +104,14 @@ export function destroy(req, res) {
     .then(removeEntity(res))
     .catch(handleError(res));
 }
+
+// Deletes a Patient from the DB
+export function destroyBulk(req, res) {
+  var bulkRes;
+  req.body.forEach(function(patient) {
+    Patient.findByIdAsync(patient._id)
+      .then(handleEntityNotFound(res))
+      .then(removeEntity(res))
+      .catch(handleError(res)); 
+  });
+}

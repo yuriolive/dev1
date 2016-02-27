@@ -36,7 +36,17 @@ class AgendaCtrl {
         },
         eventResize: this.eventUpdate,
         eventClick: this.eventUpdate,
-        eventDrop: this.eventUpdate
+        eventDrop: this.eventUpdate,
+        eventAfterRender: function (event, element, view) {
+          if (event.status == true) {
+            element.css('background-color', '#00B5AD');
+            element.css('border-color', '#00B5AD');
+          } else {
+            element.css('background-color', '#FBBD08');
+            element.css('border-color', '#FBBD08');
+          }
+        },
+        eventColor: '#FBBD08'
       }
     };
 

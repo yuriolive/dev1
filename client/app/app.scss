@@ -39,6 +39,9 @@ body {
 @import 'dashboard/pacientes/editarPaciente/editarPaciente.scss';
 @import 'dashboard/pacientes/pacientes.scss';
 @import 'main/main.scss';
+@import 'patient/cancelEvent/cancelEvent.scss';
+@import 'patient/confirmEvent/confirmEvent.scss';
+@import 'patient/patient.scss';
 @import '../components/footer/footer.scss';
 @import '../components/navbar/navbar.scss';
 // endinjector

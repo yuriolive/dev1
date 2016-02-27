@@ -14,7 +14,7 @@ router.patch('/:id', auth.isAuthenticated(), controller.update);
 router.delete('/:id', auth.isAuthenticated(), controller.destroy);
 
 // Set the status of the event (confirmed)
-router.get('/setstatus/:id', controller.setStatus);
-router.get('/delete/:id', controller.destroy);
+router.put('/setstatus/:crypto_id', controller.setStatus);
+router.delete('/delete/:crypto_id', controller.destroyPublic);
 
 module.exports = router;
